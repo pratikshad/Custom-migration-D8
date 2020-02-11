@@ -1,0 +1,31 @@
+Migrate text field to link field :
+     d8_Url_field:
+        plugin: sub_process
+        source: d7_url_field
+        process:
+          uri: value
+
+Migrate timestamp date field :
+    d8_date_field:
+      plugin: iterator
+      source: d7_date_field
+      process:
+        value:
+          plugin: format_date
+          from_format: 'U'
+          to_format: 'Y-m-d\TH:i:s'
+          source: value
+
+Migrate geofields:
+    d8_google_coordinate_field:
+      plugin: geofield_d7d8
+      source: d7_google_coordinate_field
+Migrate taxonomy :
+1) Taxonomy refeerence to the entity page
+d8_taxonomy_field:
+plugin: migration_lookup
+source: d7_taxonomy_field
+migration: taxonomy_migration_script_id
+no_stub: true
+2) Taxonomy migration :
+https://api.drupal.org/api/drupal/core%21modules%21taxonomy%21migrations%21d7_taxonomy_term.yml/8.8.x
